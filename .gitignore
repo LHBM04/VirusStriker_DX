@@ -396,3 +396,19 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# C++ specific files
+*.pdb
+*.ilk
+*.obj
+*.ipch
+*.iobj
+*.sdf
+*.sdf
+*.opensdf
+*.VC.db
+*.VC.VC.opendb
+*.bsc
+
+# Windows 10 App Certification Kit results
+WACK/*
