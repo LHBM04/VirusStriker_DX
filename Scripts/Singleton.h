@@ -1,8 +1,7 @@
 #pragma once
 
 template <typename T>
-class Singleton
-{
+class Singleton abstract {
 protected:
 
 	Singleton() {}

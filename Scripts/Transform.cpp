@@ -23,9 +23,11 @@ Transform::~Transform() {
 }
 
 void Transform::Start() {
+    return;
 }
 
 void Transform::OnDestroy() {
+    return;
 }
 
 DirectX::XMFLOAT3 Transform::WorldToLocalPosition(const Transform& _transform) {

@@ -13,6 +13,10 @@
 #pragma comment (lib, "winmm.lib")
 
 class GameObject;
+
+/// <summary>
+/// 
+/// </summary>
 class Transform : public Component {
 private:
 	DirectX::XMFLOAT3 m_position;
@@ -35,6 +39,11 @@ public:
 	void OnDestroy() override;
 
 public:
+	/// <summary>
+	/// 월드 좌표 -> 로컬 좌표로 변환합니다.
+	/// </summary>
+	/// <param name="_transform">변환할 Transform.</param>
+	/// <returns></returns>
 	static DirectX::XMFLOAT3 WorldToLocalPosition(const Transform& _transform);
 	static DirectX::XMFLOAT3 LocalToWorldPosition(const Transform& _transform);
 

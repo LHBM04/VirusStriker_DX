@@ -1,4 +1,5 @@
 #include <Windows.h>
+#include <iostream>
 #include <SDKDDKVer.h>
 
 #pragma comment (lib, "winmm.lib")
@@ -17,6 +18,7 @@ INT APIENTRY wWinMain(	_In_		HINSTANCE	hInstance,
 	UNREFERENCED_PARAMETER(hPrevInstance);
 	UNREFERENCED_PARAMETER(lpCmdLine);
 
+    // 윈도우 클래스 생성
     WNDCLASSEXW windowClass;
     windowClass.cbSize = sizeof(WNDCLASSEXW);
     windowClass.style = CS_HREDRAW | CS_VREDRAW;
@@ -52,7 +54,7 @@ INT APIENTRY wWinMain(	_In_		HINSTANCE	hInstance,
             ShowWindow(windowHandle, nCmdShow);
             UpdateWindow(windowHandle);
         }
-
+        InputManager::GetInstance().Initialize(windowHandle);
         MSG message = { 0 };
         while (message.message != WM_QUIT) {
             if (PeekMessage(&message, NULL, 0U, 0U, PM_REMOVE)) {
@@ -94,36 +96,12 @@ LRESULT WndProc(HWND    hWnd,
                 WPARAM  wParam, 
                 LPARAM  lParam) {
     switch (message) {
-        case WM_KEYDOWN: {
-            InputManager::GetInstance().SetKeyState(
-                static_cast<const int>(wParam),
-                EInputState::DOWN);
-        } return 0;
-        case WM_KEYUP: {
-            InputManager::GetInstance().SetKeyState(
-                static_cast<const int>(wParam),
-                EInputState::UP);
-        } return 0;
-        case WM_LBUTTONDOWN:
-        case WM_RBUTTONDOWN: {
-            InputManager::GetInstance().SetButtonState(
-                static_cast<const int>(wParam),
-                EInputState::DOWN);
-        } return 0;
-        case WM_LBUTTONUP:
-        case WM_RBUTTONUP: {
-            InputManager::GetInstance().SetButtonState(
-                static_cast<const int>(wParam),
-                EInputState::UP);
-        } return 0;
-        case WM_MOUSEMOVE: {
-            InputManager::GetInstance().SetCursorPosition(
-                static_cast<const int>(LOWORD(lParam)),
-                static_cast<const int>(HIWORD(lParam)));
-        } return 0;
         case WM_DESTROY: {
             PostQuitMessage(0);
         } return 0;
+        default: {
+            InputManager::GetInstance().InputProc(message, wParam, lParam);
+        } break;
     }
     return DefWindowProc(hWnd, message, wParam, lParam);
 }
