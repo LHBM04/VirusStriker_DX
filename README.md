@@ -4,4 +4,7 @@
 
 기존의 『Virus Striker』를 DirectX 12로 포팅한 게임.
 ## Requirements
-### Develope Tools
+### Development Tools
+* Visual Studio 2022
+* C++ 20
+* DirectX 12
