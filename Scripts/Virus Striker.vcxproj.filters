@@ -55,6 +55,7 @@
     <ClInclude Include="Behavior.h">
       <Filter>Core\Behaviors</Filter>
     </ClInclude>
+    <ClInclude Include="Debugger.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Virus Striker.rc">
@@ -91,6 +92,9 @@
     </ClCompile>
     <ClCompile Include="Behavior.cpp">
       <Filter>Core\Behaviors</Filter>
+    </ClCompile>
+    <ClCompile Include="Debugger.cpp">
+      <Filter>Core\Utilities</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include <iostream>
 #include <Windows.h>
 #include <string>
@@ -26,36 +25,23 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12CommandAllocator>		m_pCommandAllocator;
 
 private:
-	HWND m_windowHandle;
+	HWND m_windowHandle;	// 윈도우 핸들.
 
-	LPCTSTR m_windowClassName	= TEXT("Virus Striker Class");
-	LPCTSTR m_windowName		= TEXT("Virus Striker");
+	LPCTSTR m_windowClassName	= TEXT("Virus Striker Class");	// 윈도우 클래스 이름.
+	LPCTSTR m_windowName		= TEXT("Virus Striker");		// 프로그램 이름.
 
-	INT m_windowWidth	= 1280;
-	INT m_windowHeight	= 720;
+	INT m_windowWidth	= 1280;		// 윈도우 가로 너비.
+	INT m_windowHeight	= 720;		// 윈도우 세로 높이.
 
-	UINT m_bufferCount		= 2;	// 이중 버퍼링
-	UINT m_descriptorCount	= 2;	// 몰라 이건 왜 쓰는지
+	UINT m_bufferCount		= 2;	// 버퍼링 횟수.
+	UINT m_descriptorCount	= 2;	// 디스크립터 개수(버퍼링 횟수와 같아야 함.).
 
 public:
-	const LPCTSTR GetWindowClassName() const;
-	const LPCTSTR GetWindowName() const;
+	inline const LPCTSTR GetWindowClassName() const;
+	inline const LPCTSTR GetWindowName() const;
 
-	const INT GetWindowWidth() const;
-	const INT GetWindowHeight() const;
-
-	inline void SetWindowWidth(const int _width) {
-		this->m_windowWidth = _width;
-	}
-
-	inline void SetWindowHeight(const int _height) {
-		this->m_windowHeight = _height;
-	}
-
-	inline void SetWindowResolution(const int _width, const int _height) {
-		this->SetWindowWidth(_width);
-		this->SetWindowWidth(_height);
-	}
+	inline const INT GetWindowWidth() const;
+	inline const INT GetWindowHeight() const;
 
 public:
 	HRESULT Initialize(const HWND& _windowHandle);
@@ -65,4 +51,20 @@ public:
 	VOID Release();
 
 };
+
+inline const LPCTSTR SystemManager::GetWindowClassName() const {
+	return this->m_windowClassName;
+}
+
+inline const LPCTSTR SystemManager::GetWindowName() const {
+	return this->m_windowName;
+}
+
+inline const INT SystemManager::GetWindowWidth() const {
+	return this->m_windowWidth;
+}
+
+inline const INT SystemManager::GetWindowHeight() const {
+	return this->m_windowHeight;
+}
 

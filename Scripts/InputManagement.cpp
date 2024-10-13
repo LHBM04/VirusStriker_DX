@@ -9,7 +9,7 @@ InputManager::~InputManager() {
 	
 }
 
-BOOL CALLBACK InputManager::InputProc(UINT message, WPARAM wParam, LPARAM lParam) {
+BOOL CALLBACK InputManager::InputProc(const UINT message, const WPARAM wParam, const LPARAM lParam) {
 	switch (message) {
 		case WM_ACTIVATE:
 		case WM_ACTIVATEAPP: {
@@ -40,7 +40,7 @@ BOOL CALLBACK InputManager::InputProc(UINT message, WPARAM wParam, LPARAM lParam
 	return TRUE;
 }
 
-VOID InputManager::Initialize(HWND _windowHandle) {
+VOID InputManager::Initialize(const HWND& _windowHandle) {
 	this->m_mouseHandle->SetWindow(_windowHandle);
 }
 

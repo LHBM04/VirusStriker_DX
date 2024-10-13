@@ -14,12 +14,12 @@
 class InputManager final : public Singleton<InputManager>{
 private:
 	/// <summary>
-	/// 키보드 핸들러.
+	/// 키보드 이벤트 핸들러.
 	/// </summary>
 	std::unique_ptr<DirectX::Keyboard>	m_keyboardHandle;
 
 	/// <summary>
-	/// 마우스 핸들러.
+	/// 마우스 이벤트 핸들러.
 	/// </summary>
 	std::unique_ptr<DirectX::Mouse>		m_mouseHandle;
 
@@ -46,12 +46,12 @@ public:
 	/// <summary>
 	/// 초기화.
 	/// </summary>
-	VOID Initialize(HWND);
+	VOID Initialize(const HWND&);
 	
 	/// <summary>
 	/// 키/버튼 입력 메시지를 수신받고 이를 처리합니다.
 	/// </summary>
-	BOOL InputProc(UINT, WPARAM, LPARAM);
+	BOOL InputProc(const UINT, const WPARAM, const LPARAM);
 	
 	/// <summary>
 	/// 리셋.
@@ -64,39 +64,39 @@ public:
 	VOID Update();
 
 public:
-	inline const bool GetKey(DirectX::Keyboard::Keys) const;
-	inline const bool GetKeyDown(DirectX::Keyboard::Keys) const;
-	inline const bool GetKeyUp(DirectX::Keyboard::Keys) const;
+	inline const bool GetKey(const DirectX::Keyboard::Keys) const;
+	inline const bool GetKeyDown(const DirectX::Keyboard::Keys) const;
+	inline const bool GetKeyUp(const DirectX::Keyboard::Keys) const;
 
-	inline const bool GetButton(BYTE) const;
-	inline const bool GetButtonDown(BYTE) const;
-	inline const bool GetButtonUp(BYTE) const;
+	inline const bool GetButton(const BYTE) const;
+	inline const bool GetButtonDown(const BYTE) const;
+	inline const bool GetButtonUp(const BYTE) const;
 
 	inline DirectX::XMFLOAT2 GetCursorPosition() const;
 };
 
-inline const bool InputManager::GetKey(DirectX::Keyboard::Keys _keyCode) const {
+inline const bool InputManager::GetKey(const DirectX::Keyboard::Keys _keyCode) const {
 	return this->m_keyboardHandle->GetState().IsKeyDown(_keyCode);
 }
 
-inline const bool InputManager::GetKeyDown(DirectX::Keyboard::Keys _keyCode) const {
+inline const bool InputManager::GetKeyDown(const DirectX::Keyboard::Keys _keyCode) const {
 	return this->m_keyboardStateTracker.IsKeyPressed(_keyCode);
 }
 
-inline const bool InputManager::GetKeyUp(DirectX::Keyboard::Keys _keyCode) const {
+inline const bool InputManager::GetKeyUp(const DirectX::Keyboard::Keys _keyCode) const {
 	return this->m_keyboardStateTracker.IsKeyReleased(_keyCode);
 }
 
-inline const bool InputManager::GetButton(BYTE _buttonCode) const {
+inline const bool InputManager::GetButton(const BYTE _buttonCode) const {
 	switch (_buttonCode) {
-		case LEFT_BUTTON: { return this->m_buttonStateTracker.leftButton; }		// 마우스 왼쪽 버튼.
-		case RIGHT_BUTTON: { return this->m_buttonStateTracker.rightButton; }		// 마우스 오른쪽 버튼.
-		case MIDDLE_BUTTON: { return this->m_buttonStateTracker.middleButton; }		// 마우스 가운데 버튼(휠).
+		case LEFT_BUTTON: { return this->m_buttonStateTracker.leftButton; }
+		case RIGHT_BUTTON: { return this->m_buttonStateTracker.rightButton; }
+		case MIDDLE_BUTTON: { return this->m_buttonStateTracker.middleButton; }
 		default: { return false; }
 	}
 }
 
-inline const bool InputManager::GetButtonDown(BYTE _buttonCode) const {
+inline const bool InputManager::GetButtonDown(const BYTE _buttonCode) const {
 	switch (_buttonCode) {
 		case LEFT_BUTTON: { return this->m_buttonStateTracker.leftButton == DirectX::Mouse::ButtonStateTracker::PRESSED; }
 		case RIGHT_BUTTON: { return this->m_buttonStateTracker.rightButton == DirectX::Mouse::ButtonStateTracker::PRESSED; }
@@ -105,7 +105,7 @@ inline const bool InputManager::GetButtonDown(BYTE _buttonCode) const {
 	}
 }
 
-inline const bool InputManager::GetButtonUp(BYTE _buttonCode) const {
+inline const bool InputManager::GetButtonUp(const BYTE _buttonCode) const {
 	switch (_buttonCode) {
 		case LEFT_BUTTON: { return this->m_buttonStateTracker.leftButton == DirectX::Mouse::ButtonStateTracker::RELEASED; }
 		case RIGHT_BUTTON: { return this->m_buttonStateTracker.rightButton == DirectX::Mouse::ButtonStateTracker::RELEASED; }

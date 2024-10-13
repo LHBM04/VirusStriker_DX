@@ -1,21 +1,5 @@
 #include "SystemManagement.h"
 
-const LPCTSTR SystemManager::GetWindowClassName() const {
-    return this->m_windowClassName;
-}
-
-const LPCTSTR SystemManager::GetWindowName() const {
-    return this->m_windowName;
-}
-
-const INT SystemManager::GetWindowWidth() const {
-    return this->m_windowWidth;
-}
-
-const INT SystemManager::GetWindowHeight() const {
-    return this->m_windowHeight;
-}
-
 HRESULT SystemManager::Initialize(const HWND& hWnd) {
     this->m_windowHandle = hWnd;
 

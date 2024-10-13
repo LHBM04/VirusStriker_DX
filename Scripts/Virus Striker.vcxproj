@@ -145,6 +145,7 @@
   <ItemGroup>
     <ClInclude Include="Behavior.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="Debugger.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputManagement.h" />
     <ClInclude Include="Object.h" />
@@ -163,6 +164,7 @@
   <ItemGroup>
     <ClCompile Include="Behavior.cpp" />
     <ClCompile Include="Component.cpp" />
+    <ClCompile Include="Debugger.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManagement.cpp" />
     <ClCompile Include="Main.cpp" />
