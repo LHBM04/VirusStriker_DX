@@ -41,13 +41,8 @@ HRESULT WINAPI Core::Initialize(const HINSTANCE& _instanceHandle) {
         nullptr
     );
 
-    // 윈도우 핸들이 정상적으로 생성되지 않았을 경우.
-    if (Core::m_windowHandle == nullptr) {
-        return E_FAIL;
-    }
-
     // D3DX 디바이스 생성이 실패할 경우
-    if (!SUCCEEDED(D3DManager::GetInstance().Initialize())) {
+    if (FAILED(D3DManager::GetInstance().Initialize())) {
         return E_FAIL;
     }
 
