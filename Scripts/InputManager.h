@@ -6,6 +6,7 @@
 #include <directxtk/Keyboard.h>
 #include <directxtk/Mouse.h>
 
+#include "Core.h"
 #include "Singleton.h"
 
 /// <summary>
@@ -46,22 +47,22 @@ public:
 	/// <summary>
 	/// 초기화.
 	/// </summary>
-	VOID Initialize(const HWND&);
+	void Initialize();
 	
 	/// <summary>
 	/// 키/버튼 입력 메시지를 수신받고 이를 처리합니다.
 	/// </summary>
-	BOOL InputProc(const UINT, const WPARAM, const LPARAM);
+	bool ProceedInput(const UINT, const WPARAM, const LPARAM);
 	
 	/// <summary>
 	/// 리셋.
 	/// </summary>
-	VOID Reset();
+	void Reset();
 
 	/// <summary>
 	/// 업데이트.
 	/// </summary>
-	VOID Update();
+	void Update();
 
 public:
 	inline const bool GetKey(const DirectX::Keyboard::Keys) const;

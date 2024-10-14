@@ -1,8 +1,6 @@
 #include "D3DManager.h"
 
-HRESULT SystemManager::Initialize(const HWND& hWnd) {
-    this->m_windowHandle = hWnd;
-
+HRESULT D3DManager::Initialize() {
 #if defined (_DEBUG)
     AllocConsole(); // 디버깅용 터미널.
     FILE* fp;
@@ -53,7 +51,7 @@ HRESULT SystemManager::Initialize(const HWND& hWnd) {
 
     HRESULT hr = pFactory->CreateSwapChainForHwnd(
         this->m_pCommandQueue.Get(),
-        this->m_windowHandle,
+        Core::GetWindowHandle(),
         &swapChainDesc,
         nullptr,
         nullptr,
@@ -111,19 +109,19 @@ HRESULT SystemManager::Initialize(const HWND& hWnd) {
     return S_OK;
 }
 
-VOID SystemManager::Update(const float _deltaTime) {
+VOID D3DManager::Update(const float _deltaTime) {
     return VOID();
 }
 
-VOID SystemManager::FixedUpdate(const float _fixedDeltaTime) {
+VOID D3DManager::FixedUpdate(const float _fixedDeltaTime) {
 	return VOID();
 }
 
-VOID SystemManager::Render() {
+VOID D3DManager::Render() {
    
 }
 
-VOID SystemManager::Release() {
+VOID D3DManager::Release() {
     this->m_pD3DDevice->Release();
     this->m_pCommandQueue->Release();
     this->m_pSwapChain->Release();

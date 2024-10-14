@@ -145,13 +145,13 @@
   <ItemGroup>
     <ClInclude Include="Behavior.h" />
     <ClInclude Include="Component.h" />
-    <ClInclude Include="Debugger.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Singleton.h" />
-    <ClInclude Include="SystemManager.h" />
+    <ClInclude Include="D3DManager.h" />
+    <ClInclude Include="Core.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
@@ -164,12 +164,12 @@
   <ItemGroup>
     <ClCompile Include="Behavior.cpp" />
     <ClCompile Include="Component.cpp" />
-    <ClCompile Include="Debugger.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Object.cpp" />
-    <ClCompile Include="SystemManager.cpp" />
+    <ClCompile Include="D3DManager.cpp" />
+    <ClCompile Include="Core.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

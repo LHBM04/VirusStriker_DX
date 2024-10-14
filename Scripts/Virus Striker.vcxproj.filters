@@ -34,9 +34,6 @@
     <ClInclude Include="InputManager.h">
       <Filter>Core\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="SystemManager.h">
-      <Filter>Core\Utilities</Filter>
-    </ClInclude>
     <ClInclude Include="Singleton.h">
       <Filter>Core\Utilities</Filter>
     </ClInclude>
@@ -55,8 +52,11 @@
     <ClInclude Include="Behavior.h">
       <Filter>Core\Behaviors</Filter>
     </ClInclude>
-    <ClInclude Include="Debugger.h">
-      <Filter>Core\Utilities</Filter>
+    <ClInclude Include="D3DManager.h">
+      <Filter>Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Core.h">
+      <Filter>Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -77,9 +77,6 @@
     <ClCompile Include="InputManager.cpp">
       <Filter>Core\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="SystemManager.cpp">
-      <Filter>Core\Utilities</Filter>
-    </ClCompile>
     <ClCompile Include="GameObject.cpp">
       <Filter>Core\Objects</Filter>
     </ClCompile>
@@ -95,8 +92,11 @@
     <ClCompile Include="Behavior.cpp">
       <Filter>Core\Behaviors</Filter>
     </ClCompile>
-    <ClCompile Include="Debugger.cpp">
-      <Filter>Core\Utilities</Filter>
+    <ClCompile Include="D3DManager.cpp">
+      <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Core.cpp">
+      <Filter>Core</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
