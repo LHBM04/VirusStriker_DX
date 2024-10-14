@@ -31,10 +31,10 @@
     <ClInclude Include="Resource.h">
       <Filter>리소스 파일</Filter>
     </ClInclude>
-    <ClInclude Include="InputManagement.h">
+    <ClInclude Include="InputManager.h">
       <Filter>Core\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="SystemManagement.h">
+    <ClInclude Include="SystemManager.h">
       <Filter>Core\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="Singleton.h">
@@ -55,7 +55,9 @@
     <ClInclude Include="Behavior.h">
       <Filter>Core\Behaviors</Filter>
     </ClInclude>
-    <ClInclude Include="Debugger.h" />
+    <ClInclude Include="Debugger.h">
+      <Filter>Core\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Virus Striker.rc">
@@ -72,10 +74,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="InputManagement.cpp">
+    <ClCompile Include="InputManager.cpp">
       <Filter>Core\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="SystemManagement.cpp">
+    <ClCompile Include="SystemManager.cpp">
       <Filter>Core\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="GameObject.cpp">

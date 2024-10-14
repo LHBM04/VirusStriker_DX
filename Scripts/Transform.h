@@ -5,7 +5,9 @@
 #include <wrl.h>
 #include <vector>
 #include <memory>
+#include <iostream>
 #include <optional>
+#include <stdexcept>
 
 #include "Component.h"
 #include "GameObject.h"
@@ -75,11 +77,6 @@ public:
 	inline const std::shared_ptr<Transform>& GetChild(const size_t _index) const;
 	inline const std::vector<std::shared_ptr<Transform>>& GetChildren() const;
 
-	inline void SetParent(const std::optional<const Transform>& _parent);
-	inline void SetParent(Transform* const _parent);
-	inline void AddChild(const Transform& _child);
-	inline void AddChild(Transform* const _child);
-
 };
 
 inline const DirectX::XMFLOAT3 Transform::GetPosition() const {
@@ -106,31 +103,28 @@ inline void Transform::SetRotation(const DirectX::XMFLOAT3& _rotation) {
 	this->m_rotation = _rotation;
 }
 
-inline const DirectX::XMFLOAT3 Transform::GetLocalPosition() const
-{
-	return DirectX::XMFLOAT3();
+inline const DirectX::XMFLOAT3 Transform::GetLocalPosition() const {
+	throw std::runtime_error("");
 }
 
-inline const DirectX::XMFLOAT3 Transform::GetLocalScale() const
-{
-	return DirectX::XMFLOAT3();
+inline const DirectX::XMFLOAT3 Transform::GetLocalScale() const {
+	throw std::runtime_error("");
 }
 
-inline const DirectX::XMFLOAT3 Transform::GetLocalRotation() const
-{
-	return DirectX::XMFLOAT3();
+inline const DirectX::XMFLOAT3 Transform::GetLocalRotation() const {
+	throw std::runtime_error("");
 }
 
-inline void Transform::SetLocalPosition(const DirectX::XMFLOAT3& _position)
-{
+inline void Transform::SetLocalPosition(const DirectX::XMFLOAT3& _position) {
+	throw std::runtime_error("");
 }
 
-inline void Transform::SetLocalScale(const DirectX::XMFLOAT3& _scale)
-{
+inline void Transform::SetLocalScale(const DirectX::XMFLOAT3& _scale) {
+	throw std::runtime_error("");
 }
 
-inline void Transform::SetLocalRotation(const DirectX::XMFLOAT3& _rotation)
-{
+inline void Transform::SetLocalRotation(const DirectX::XMFLOAT3& _rotation) {
+	throw std::runtime_error("");
 }
 
 inline const std::shared_ptr<Transform>& Transform::GetParent() const {

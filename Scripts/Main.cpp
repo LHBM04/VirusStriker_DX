@@ -4,8 +4,8 @@
 
 #pragma comment (lib, "winmm.lib")
 
-#include "SystemManagement.h"
-#include "InputManagement.h"
+#include "D3DManager.h"
+#include "InputManager.h"
 
 INT		APIENTRY	wWinMain(_In_ HINSTANCE, _In_opt_ HINSTANCE, _In_ LPWSTR, _In_ INT);
 LRESULT CALLBACK	WndProc(HWND, UINT, WPARAM, LPARAM);

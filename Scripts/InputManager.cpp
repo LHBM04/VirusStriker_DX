@@ -1,4 +1,4 @@
-#include "InputManagement.h"
+#include "InputManager.h"
 
 InputManager::InputManager() : 
 	m_keyboardHandle(std::make_unique<DirectX::Keyboard>()), 
@@ -9,7 +9,7 @@ InputManager::~InputManager() {
 	
 }
 
-BOOL CALLBACK InputManager::InputProc(const UINT message, const WPARAM wParam, const LPARAM lParam) {
+BOOL InputManager::InputProc(const UINT message, const WPARAM wParam, const LPARAM lParam) {
 	switch (message) {
 		case WM_ACTIVATE:
 		case WM_ACTIVATEAPP: {

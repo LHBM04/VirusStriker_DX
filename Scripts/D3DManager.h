@@ -13,7 +13,7 @@
 #pragma comment (lib, "winmm.lib")
 
 #include "Singleton.h"
-#include "InputManagement.h"
+#include "InputManager.h"
 
 class SystemManager final : public Singleton<SystemManager> {
 private:
@@ -27,8 +27,8 @@ private:
 private:
 	HWND m_windowHandle;	// 윈도우 핸들.
 
-	LPCTSTR m_windowClassName	= TEXT("Virus Striker Class");	// 윈도우 클래스 이름.
-	LPCTSTR m_windowName		= TEXT("Virus Striker");		// 프로그램 이름.
+	const LPCTSTR m_windowClassName	= TEXT("Virus Striker Class");	// 윈도우 클래스 이름.
+	const LPCTSTR m_windowName		= TEXT("Virus Striker");		// 프로그램 이름.
 
 	INT m_windowWidth	= 1280;		// 윈도우 가로 너비.
 	INT m_windowHeight	= 720;		// 윈도우 세로 높이.

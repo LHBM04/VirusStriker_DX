@@ -1,4 +1,4 @@
-#include "SystemManagement.h"
+#include "D3DManager.h"
 
 HRESULT SystemManager::Initialize(const HWND& hWnd) {
     this->m_windowHandle = hWnd;
