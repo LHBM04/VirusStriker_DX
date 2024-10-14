@@ -79,7 +79,6 @@ int WINAPI Core::Run(const INT _commandShow) {
                 fixedDeltaTime -= fixedUpdateTime;
                 D3DManager::GetInstance().FixedUpdate(fixedUpdateTime);
             }
-            D3DManager::GetInstance().Update(deltaTime);
             InputManager::GetInstance().Update();
             D3DManager::GetInstance().Render();
             prevTime = curTime;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <iostream>
 #include <Windows.h>
 #include <d3d12.h>
@@ -15,6 +16,8 @@
 #include "Singleton.h"
 #include "InputManager.h"
 
+#define SAFE_RELEASE(x) if (x) x->Release()
+
 class D3DManager final : public Singleton<D3DManager> {
 private:
 	Microsoft::WRL::ComPtr<ID3D12Device>				m_pD3DDevice;
@@ -23,6 +26,25 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap>		m_pRtvHeap;
 	Microsoft::WRL::ComPtr<ID3D12GraphicsCommandList>	m_pCommandList; 
 	Microsoft::WRL::ComPtr<ID3D12CommandAllocator>		m_pCommandAllocator;
+
+	D3D12_VIEWPORT                                      m_viewport;            // 뷰포트 설정
+	D3D12_RECT                                          m_scissorRect;         // 스키서(Rectangle) 설정
+
+	Microsoft::WRL::ComPtr<ID3D12Fence>                 m_pFence;              // 동기화를 위한 펜스
+	HANDLE                                              m_fenceEvent;          // 펜스 이벤트 핸들
+	UINT64                                              m_fenceValue;          // 펜스 값
+
+	UINT                                                m_rtvDescriptorSize;   // RTV 디스크립터 크기
+	Microsoft::WRL::ComPtr<ID3D12Resource>              m_renderTargets[2];    // 렌더 타겟 백 버퍼
+
+	UINT m_bufferCount = 2;	// 버퍼링 횟수.
+	UINT m_descriptorCount = 2;	// 디스크립터 개수(버퍼링 횟수와 같아야 함.).
+
+	// 카메라 관련
+	DirectX::XMMATRIX                                   m_matView;             // 뷰 매트릭스
+	DirectX::XMMATRIX                                   m_matProj;             // 프로젝션 매트릭스
+	DirectX::XMVECTOR                                   m_cameraPos;             // 카메라 위치
+	DirectX::XMVECTOR                                   m_cameraScale;           // 카메라 스케일
 
 private:
 	int m_windowPositionX = 100;	// 윈도우 생성 위치(X).
@@ -33,12 +55,10 @@ private:
 
 	bool m_isFullScreen = false;	// 풀스크린 여부.
 
-	unsigned int m_bufferCount		= 2;	// 버퍼링 횟수.
-	unsigned int m_descriptorCount	= 2;	// 디스크립터 개수(버퍼링 횟수와 같아야 함.).
+
 
 public:
 	HRESULT Initialize();
-	void Update(const float _deltaTime);
 	void FixedUpdate(const float _fixedDeltaTime);
 	void Render();
 	void Release();

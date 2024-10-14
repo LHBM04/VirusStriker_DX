@@ -149,9 +149,11 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="Object.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="ResourceManager.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="D3DManager.h" />
     <ClInclude Include="Core.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
@@ -170,6 +172,8 @@
     <ClCompile Include="Object.cpp" />
     <ClCompile Include="D3DManager.cpp" />
     <ClCompile Include="Core.cpp" />
+    <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

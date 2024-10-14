@@ -58,6 +58,12 @@
     <ClInclude Include="Core.h">
       <Filter>Core</Filter>
     </ClInclude>
+    <ClInclude Include="ResourceManager.h">
+      <Filter>Core\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Core\Components</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Virus Striker.rc">
@@ -97,6 +103,12 @@
     </ClCompile>
     <ClCompile Include="Core.cpp">
       <Filter>Core</Filter>
+    </ClCompile>
+    <ClCompile Include="ResourceManager.cpp">
+      <Filter>Core\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Core\Components</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
