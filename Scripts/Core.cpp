@@ -27,7 +27,7 @@ HRESULT WINAPI Core::Initialize(const HINSTANCE& _instanceHandle) {
 
     // 윈도우 핸들 생성.
     Core::m_windowHandle = CreateWindowEx(
-        0,
+        NULL,
         Core::m_windowClassName,
         Core::m_windowName,
         WS_OVERLAPPEDWINDOW & ~WS_THICKFRAME,
