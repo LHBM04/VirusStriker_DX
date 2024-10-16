@@ -190,8 +190,7 @@ VOID D3DManager::Render() {
     }
 
     if (this->m_pFence->GetCompletedValue() < this->m_currentFence) {
-        HANDLE eventHandle = CreateEventExW(nullptr, false, false, EVENT_ALL_ACCESS);
-
+        HANDLE eventHandle = CreateEventExW(nullptr, nullptr, false, EVENT_ALL_ACCESS);
         if (FAILED(this->m_pFence->SetEventOnCompletion(this->m_currentFence, eventHandle))) {
             assert(0);
         }
