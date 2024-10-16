@@ -53,11 +53,11 @@ private:
 	D3D12_RECT m_scissorRect;
 
 private:
-	UINT m_windowPositionX = 100;	// 윈도우 생성 위치(X).
-	UINT m_windowPositionY = 100;	// 윈도우 생성 위치(Y).
+	FLOAT m_windowPositionX = 100;	// 윈도우 생성 위치(X).
+	FLOAT m_windowPositionY = 100;	// 윈도우 생성 위치(Y).
 	
-	UINT m_windowWidth	= 1280;		// 윈도우 가로 너비.
-	UINT m_windowHeight	= 720;		// 윈도우 세로 높이.
+	FLOAT m_windowWidth	= 1280;		// 윈도우 가로 너비.
+	FLOAT m_windowHeight	= 720;		// 윈도우 세로 높이.
 
 	BOOL m_isFullScreen = false;	// 풀스크린 여부.
 

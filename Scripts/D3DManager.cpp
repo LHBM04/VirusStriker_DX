@@ -144,7 +144,7 @@ HRESULT D3DManager::Initialize() {
         rtvHeapHandle.Offset(1, this->m_rtvDescriptorSize);
     }
 #pragma endregion
-#pragma region Depth, Stancil View 汲沥
+#pragma region 7. Depth, Stancil View 汲沥
     D3D12_RESOURCE_DESC depthStencilDescriptor{};
     depthStencilDescriptor.Dimension            = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
     depthStencilDescriptor.Alignment            = NULL;
@@ -185,11 +185,11 @@ HRESULT D3DManager::Initialize() {
         D3D12_RESOURCE_STATE_DEPTH_WRITE);
     this->m_pCommandList->ResourceBarrier(1, &barrier);
 #pragma endregion
-#pragma region View Port 积己
+#pragma region 8. View Port 积己
     this->m_screenViewport.TopLeftX   = 0;
     this->m_screenViewport.TopLeftY   = 0;
-    this->m_screenViewport.Width      = static_cast<float>(this->m_windowWidth);
-    this->m_screenViewport.Height     = static_cast<float>(this->m_windowHeight);
+    this->m_screenViewport.Width      = this->m_windowWidth;
+    this->m_screenViewport.Height     = this->m_windowHeight;
     this->m_screenViewport.MinDepth   = NULL;
     this->m_screenViewport.MaxDepth   = 1.0f;
 
