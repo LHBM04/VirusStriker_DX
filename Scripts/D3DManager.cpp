@@ -132,6 +132,71 @@ HRESULT D3DManager::Initialize() {
     if (FAILED(this->m_pD3DDevice->CreateDescriptorHeap(&dsvHeapDescriptor, IID_PPV_ARGS(&m_pDSVHeap)))) {
         return E_FAIL;
     }
+
+    CD3DX12_CPU_DESCRIPTOR_HANDLE rtvHeapHandle = CD3DX12_CPU_DESCRIPTOR_HANDLE(this->m_pRTVHeap->GetCPUDescriptorHandleForHeapStart());
+    for (UINT i = 0; i < this->MAX_BACKBUFFER_COUNT; i++) {
+        if (FAILED(this->m_pSwapChain->GetBuffer(i, IID_PPV_ARGS(&this->m_pSwapChainBuffer[i])))) {
+            return E_FAIL;
+        }
+
+        // 坊歹 鸥百 轰 积己
+        this->m_pD3DDevice->CreateRenderTargetView(this->m_pSwapChainBuffer[i].Get(), nullptr, rtvHeapHandle);
+        rtvHeapHandle.Offset(1, this->m_rtvDescriptorSize);
+    }
+#pragma endregion
+#pragma region Depth, Stancil View 汲沥
+    D3D12_RESOURCE_DESC depthStencilDescriptor{};
+    depthStencilDescriptor.Dimension            = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
+    depthStencilDescriptor.Alignment            = NULL;
+    depthStencilDescriptor.Width                = this->m_windowWidth;
+    depthStencilDescriptor.Height               = this->m_windowHeight;
+    depthStencilDescriptor.DepthOrArraySize     = 1;
+    depthStencilDescriptor.MipLevels            = 1;
+    depthStencilDescriptor.Format               = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    depthStencilDescriptor.SampleDesc.Count     = m_4xMsaaState ? 4 : 1;
+    depthStencilDescriptor.SampleDesc.Quality   = this->m_4xMsaaState ? (this->m_4xMsaaQuality - 1) : 0;
+    depthStencilDescriptor.Flags                = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
+
+    D3D12_CLEAR_VALUE optianalClear{};
+    optianalClear.Format                = DXGI_FORMAT_D24_UNORM_S8_UINT;
+    optianalClear.DepthStencil.Depth    = 1.0f;
+    optianalClear.DepthStencil.Stencil  = NULL;
+    
+    CD3DX12_HEAP_PROPERTIES heapProperties = CD3DX12_HEAP_PROPERTIES(D3D12_HEAP_TYPE_DEFAULT);
+    if (FAILED(this->m_pD3DDevice->CreateCommittedResource(
+        &heapProperties,
+        D3D12_HEAP_FLAG_NONE,
+        &depthStencilDescriptor,
+        D3D12_RESOURCE_STATE_COMMON,
+        &optianalClear,
+        IID_PPV_ARGS(&this->m_pDepthStencilBuffer)))) {
+        return E_FAIL;
+    }
+
+    this->m_pD3DDevice->CreateDepthStencilView(
+        this->m_pDepthStencilBuffer.Get(),
+        nullptr,
+        this->GetDepthStencilView()
+    );
+
+    CD3DX12_RESOURCE_BARRIER barrier = CD3DX12_RESOURCE_BARRIER::Transition(
+        this->m_pDepthStencilBuffer.Get(),
+        D3D12_RESOURCE_STATE_COMMON,
+        D3D12_RESOURCE_STATE_DEPTH_WRITE);
+    this->m_pCommandList->ResourceBarrier(1, &barrier);
+#pragma endregion
+#pragma region View Port 积己
+    this->m_screenViewport.TopLeftX   = 0;
+    this->m_screenViewport.TopLeftY   = 0;
+    this->m_screenViewport.Width      = static_cast<float>(this->m_windowWidth);
+    this->m_screenViewport.Height     = static_cast<float>(this->m_windowHeight);
+    this->m_screenViewport.MinDepth   = NULL;
+    this->m_screenViewport.MaxDepth   = 1.0f;
+
+    this->m_pCommandList->RSSetViewports(1, &this->m_screenViewport);
+
+    this->m_scissorRect = { 0, 0, static_cast<long>(this->m_windowWidth / 2), static_cast<long>(this->m_windowHeight / 2)};
+    this->m_pCommandList->RSSetScissorRects(1, &this->m_scissorRect);
 #pragma endregion
     return S_OK;
 }

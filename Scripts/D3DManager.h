@@ -45,6 +45,10 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_pRTVHeap;
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_pDSVHeap;
 
+	// Set true to use 4X MSAA (?.1.8).  The default is false.
+	bool      m_4xMsaaState = false;    // 4X MSAA enabled
+	UINT      m_4xMsaaQuality = 0;      // quality level of 4X MSAA
+
 	D3D12_VIEWPORT m_screenViewport;
 	D3D12_RECT m_scissorRect;
 
