@@ -193,10 +193,7 @@ HRESULT D3DManager::Initialize() {
     this->m_screenViewport.MinDepth   = NULL;
     this->m_screenViewport.MaxDepth   = 1.0f;
 
-    this->m_pCommandList->RSSetViewports(1, &this->m_screenViewport);
-
     this->m_scissorRect = { 0, 0, static_cast<long>(this->m_windowWidth / 2), static_cast<long>(this->m_windowHeight / 2)};
-    this->m_pCommandList->RSSetScissorRects(1, &this->m_scissorRect);
 #pragma endregion
     return S_OK;
 }
