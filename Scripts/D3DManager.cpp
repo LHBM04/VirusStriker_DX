@@ -185,6 +185,20 @@ VOID D3DManager::Render() {
     }
 
     this->m_currentBackBuffer = (this->m_currentBackBuffer + 1) % MAX_BACKBUFFER_COUNT;
+    if (FAILED(this->m_pCommandQueue->Signal(this->m_pFence.Get(), this->m_currentFence))) {
+        assert(0);
+    }
+
+    if (this->m_pFence->GetCompletedValue() < this->m_currentFence) {
+        HANDLE eventHandle = CreateEventExW(nullptr, false, false, EVENT_ALL_ACCESS);
+
+        if (FAILED(this->m_pFence->SetEventOnCompletion(this->m_currentFence, eventHandle))) {
+            assert(0);
+        }
+
+        WaitForSingleObject(eventHandle, INFINITE);
+        CloseHandle(eventHandle);
+    }
 }
 
 VOID D3DManager::Release() {
