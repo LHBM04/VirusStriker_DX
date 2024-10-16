@@ -91,9 +91,9 @@ HRESULT D3DManager::Initialize() {
     swapChainDescriptor.Flags               = DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT;
 
     DXGI_SWAP_CHAIN_FULLSCREEN_DESC fullscreenDesc{};
-    fullscreenDesc.Windowed                 = static_cast<BOOL>(!this->m_isFullScreen);
-    fullscreenDesc.RefreshRate.Numerator    = 60;
-    fullscreenDesc.RefreshRate.Denominator  = 1;
+    fullscreenDesc.Windowed                 = !this->m_isFullScreen;
+    fullscreenDesc.RefreshRate.Numerator    = 60U;
+    fullscreenDesc.RefreshRate.Denominator  = 1U;
     fullscreenDesc.ScanlineOrdering         = DXGI_MODE_SCANLINE_ORDER_UNSPECIFIED;
     fullscreenDesc.Scaling                  = DXGI_MODE_SCALING_UNSPECIFIED;
 
