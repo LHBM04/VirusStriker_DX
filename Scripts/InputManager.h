@@ -1,10 +1,10 @@
 #pragma once
 
+#include <memory>
+#include <Windows.h>
 #include <DirectXMath.h>
 #include <directxtk/Keyboard.h>
 #include <directxtk/Mouse.h>
-#include <memory>
-#include <Windows.h>
 
 #include "Core.h"
 #include "Singleton.h"
