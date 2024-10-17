@@ -15,9 +15,9 @@
 #pragma comment (lib, "winmm.lib")
 
 class GameObject;
-
+	
 /// <summary>
-/// 
+/// Game Object의 위치, 크기, 회전 정보를 관리합니다.
 /// </summary>
 class Transform : public Component {
 private:
@@ -25,8 +25,8 @@ private:
 	DirectX::XMFLOAT3 m_scale;
 	DirectX::XMFLOAT3 m_rotation;
 
-	std::shared_ptr<Transform>				m_parent;
-	std::vector<std::shared_ptr<Transform>>	m_children;
+	std::shared_ptr<Transform>				m_parent;	
+	std::vector<std::shared_ptr<Transform>>	m_children;	
 
 public:
 	Transform(GameObject* const);
@@ -53,11 +53,6 @@ public:
 	void OnDestroy() override;
 
 public:
-	/// <summary>
-	/// 월드 좌표 -> 로컬 좌표로 변환합니다.
-	/// </summary>
-	/// <param name="_transform">변환할 Transform.</param>
-	/// <returns></returns>
 	static const DirectX::XMVECTOR WorldToLocalPosition(const Transform&);
 	static const DirectX::XMVECTOR LocalToWorldPosition(const Transform&);
 
@@ -102,11 +97,9 @@ public:
 	inline const FLOAT				GetLocalRotationY() const;
 	inline const FLOAT				GetLocalRotationZ() const;
 #pragma endregion
-	inline const std::shared_ptr<Transform>& GetParent() const;
-	inline const std::shared_ptr<Transform>& GetChild(const size_t) const;
-	inline const std::vector<std::shared_ptr<Transform>>& GetChildren() const;
 #pragma endregion
 #pragma region Setters
+#pragma region Getters
 	inline void SetPosition(const DirectX::XMFLOAT2);
 	inline void SetPosition(const DirectX::XMFLOAT3);
 	inline void SetPosition(const DirectX::XMVECTOR);
@@ -114,7 +107,8 @@ public:
 	inline void SetLocalPosition(const DirectX::XMFLOAT2);
 	inline void SetLocalPosition(const DirectX::XMFLOAT3);
 	inline void SetLocalPosition(const DirectX::XMVECTOR);
-	
+#pragma endregion
+#pragma region Scale
 	inline void SetScale(const DirectX::XMFLOAT2);
 	inline void SetScale(const DirectX::XMFLOAT3);
 	inline void SetScale(const DirectX::XMVECTOR);
@@ -122,7 +116,8 @@ public:
 	inline void SetLocalScale(const DirectX::XMFLOAT2);
 	inline void SetLocalScale(const DirectX::XMFLOAT3);
 	inline void SetLocalScale(const DirectX::XMVECTOR);
-
+#pragma endregion
+#pragma region Rotation
 	inline void SetRotation(const DirectX::XMFLOAT2);
 	inline void SetRotation(const DirectX::XMFLOAT3);
 	inline void SetRotation(const DirectX::XMVECTOR);
@@ -131,5 +126,5 @@ public:
 	inline void SetLocalRotation(const DirectX::XMFLOAT3);
 	inline void SetLocalRotation(const DirectX::XMVECTOR);
 #pragma endregion
-public:
+#pragma endregion
 };
