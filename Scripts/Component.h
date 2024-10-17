@@ -17,12 +17,14 @@ public:
 	Component(GameObject* _owner);
 	~Component();
 
-	
+	void operator = (Component& _other) = delete;
+	void operator < (Component& _other) = delete;
+	void operator > (Component& _other) = delete;
 
 public:
 	const GameObject* GetOwner() const;
-	const Transform& GetTransform() const;
 	const std::wstring& GetName() const override;
+	const Transform& GetTransform() const;
 
 public:
 	virtual void Start() = 0;

@@ -40,6 +40,7 @@ bool InputManager::ProceedInput(const UINT message, const WPARAM wParam, const L
 		default: {
 		} return false;
 	}
+
 	return true;
 }
 

@@ -143,6 +143,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Behavior.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameObject.h" />
@@ -150,6 +151,7 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="ResourceManager.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Singleton.h" />
     <ClInclude Include="D3DManager.h" />
     <ClInclude Include="Core.h" />
@@ -164,6 +166,7 @@
     <Image Include="Virus Striker.ico" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Behavior.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -173,6 +176,8 @@
     <ClCompile Include="D3DManager.cpp" />
     <ClCompile Include="Core.cpp" />
     <ClCompile Include="ResourceManager.cpp" />
+    <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="Transform.cpp" />
   </ItemGroup>

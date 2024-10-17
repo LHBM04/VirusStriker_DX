@@ -64,6 +64,12 @@
     <ClInclude Include="Sprite.h">
       <Filter>Core\Components</Filter>
     </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Level</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Virus Striker.rc">
@@ -109,6 +115,15 @@
     </ClCompile>
     <ClCompile Include="Sprite.cpp">
       <Filter>Core\Components</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Level</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

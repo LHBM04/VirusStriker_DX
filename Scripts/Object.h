@@ -4,8 +4,10 @@
 
 class Object abstract {
 private:
-	std::wstring	m_name;
-	bool			m_isDetsroy;
+	static const std::wstring DEFAULT_OBJECT_NAME;
+
+	std::wstring	m_name{ DEFAULT_OBJECT_NAME };
+	bool			m_isDetsroy{ false };
 
 public:
 	Object();

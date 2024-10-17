@@ -1,11 +1,10 @@
 #include "Object.h"
 
-Object::Object()
-{
+Object::Object() : 
+	m_isDetsroy(false) {
 }
 
-Object::~Object()
-{
+Object::~Object() {
 }
 
 const std::wstring& Object::GetName() const {
