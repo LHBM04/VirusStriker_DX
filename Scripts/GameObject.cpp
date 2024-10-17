@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-void GameObject::Start() {
+void GameObject::OnStart() {
 }
 
 void GameObject::OnDestroy() {

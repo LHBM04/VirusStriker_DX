@@ -14,7 +14,7 @@ public:
 	~Behavior();
 
 public:
-	virtual void Start() = 0;
+	virtual void OnStart() = 0;
 	virtual void OnEnable() = 0;
 	virtual void Update(const float _deltaTime) = 0;
 	virtual void FixedUpdate(const float _fixedDeltaTime) = 0;

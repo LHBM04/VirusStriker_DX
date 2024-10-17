@@ -8,18 +8,20 @@
 class GameObject;
 class Transform;
 
+/// <summary>
+/// Game Object의 정보 및 특징을 저장하고 관리합니다.
+/// </summary>
 class Component abstract : public Object {
 private:
+	/// <summary>
+	/// Component의 주인.
+	/// </summary>
 	GameObject* m_owner;
 
 public:
 	Component() = delete;
-	Component(GameObject* _owner);
+	Component(GameObject* const);
 	~Component();
-
-	void operator = (Component& _other) = delete;
-	void operator < (Component& _other) = delete;
-	void operator > (Component& _other) = delete;
 
 public:
 	const GameObject* GetOwner() const;
@@ -27,7 +29,7 @@ public:
 	const Transform& GetTransform() const;
 
 public:
-	virtual void Start() = 0;
+	virtual void OnStart() = 0;
 	virtual void OnDestroy() = 0;
 
 };

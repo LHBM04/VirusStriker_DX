@@ -1,6 +1,6 @@
 #include "Component.h"
 
-Component::Component(GameObject* _owner) {
+Component::Component(GameObject* const _owner) {
 	this->m_owner = _owner;
 }
 
@@ -19,7 +19,7 @@ const std::wstring& Component::GetName() const {
 	return this->m_owner->GetName();
 }
 
-void Component::Start() {
+void Component::OnStart() {
 	return;
 }
 
