@@ -8,7 +8,7 @@ private:
 	/// <summary>
 	/// 오브젝트의 이름.
 	/// </summary>
-	std::string	m_name;
+	std::wstring	m_name;
 
 	/// <summary>
 	/// 오브젝트의 파괴 여부.

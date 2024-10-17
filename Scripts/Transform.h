@@ -29,15 +29,27 @@ private:
 	std::vector<std::shared_ptr<Transform>>	m_children;
 
 public:
-	Transform(GameObject* _owner);
-	Transform(GameObject* _owner, 
-		const DirectX::XMFLOAT3& _position, 
-		const DirectX::XMFLOAT3& _scale, 
-		const DirectX::XMFLOAT3& _rotation);
+	Transform(GameObject* const);
+	Transform(
+		GameObject* const,
+		const DirectX::XMFLOAT2,
+		const DirectX::XMFLOAT2,
+		const DirectX::XMFLOAT2
+	);
+	Transform(
+		GameObject* const, 
+		const DirectX::XMFLOAT3,
+		const DirectX::XMFLOAT3, 
+		const DirectX::XMFLOAT3);
+	Transform(
+		GameObject* const,
+		const DirectX::XMVECTOR,
+		const DirectX::XMVECTOR,
+		const DirectX::XMVECTOR);
 	~Transform();
 
 public:
-	void Start() override;
+	void OnStart() override;
 	void OnDestroy() override;
 
 public:
@@ -46,95 +58,78 @@ public:
 	/// </summary>
 	/// <param name="_transform">º¯È¯ÇÒ Transform.</param>
 	/// <returns></returns>
-	static DirectX::XMFLOAT3 WorldToLocalPosition(const Transform& _transform);
-	static DirectX::XMFLOAT3 LocalToWorldPosition(const Transform& _transform);
+	static const DirectX::XMVECTOR WorldToLocalPosition(const Transform&);
+	static const DirectX::XMVECTOR LocalToWorldPosition(const Transform&);
 
-	static DirectX::XMFLOAT3 WorldToLocalScale(const Transform& _transform);
-	static DirectX::XMFLOAT3 LocalToWorldScale(const Transform& _transform);
+	static const DirectX::XMVECTOR WorldToLocalScale(const Transform&);
+	static const DirectX::XMVECTOR LocalToWorldScale(const Transform&);
 
-	static DirectX::XMFLOAT3 WorldToLocalRotation(const Transform& _transform);
-	static DirectX::XMFLOAT3 LocalToWorldRotation(const Transform& _transform);
-
-public:
-	inline const DirectX::XMFLOAT3 GetPosition() const;
-	inline const DirectX::XMFLOAT3 GetScale() const;
-	inline const DirectX::XMFLOAT3 GetRotation() const;
-
-	inline void SetPosition(const DirectX::XMFLOAT3& _position);
-	inline void SetScale(const DirectX::XMFLOAT3& _scale);
-	inline void SetRotation(const DirectX::XMFLOAT3& _rotation);
-
-	inline const DirectX::XMFLOAT3 GetLocalPosition() const;
-	inline const DirectX::XMFLOAT3 GetLocalScale() const;
-	inline const DirectX::XMFLOAT3 GetLocalRotation() const;
-
-	inline void SetLocalPosition(const DirectX::XMFLOAT3& _position);
-	inline void SetLocalScale(const DirectX::XMFLOAT3& _scale);
-	inline void SetLocalRotation(const DirectX::XMFLOAT3& _rotation);
+	static const DirectX::XMVECTOR WorldToLocalRotation(const Transform&);
+	static const DirectX::XMVECTOR LocalToWorldRotation(const Transform&);
 
 public:
+#pragma region Getters
+#pragma region Position
+	inline const DirectX::XMVECTOR	GetPosition()	const;
+	inline const FLOAT				GetPositionX()	const;
+	inline const FLOAT				GetPositionY()	const;
+	inline const FLOAT				GetPositionZ()	const;
+
+	inline const DirectX::XMVECTOR	GetLocalPosition()	const;
+	inline const FLOAT				GetLocalPositionX() const;
+	inline const FLOAT				GetLocalPositionY() const;
+	inline const FLOAT				GetLocalPositionZ() const;
+#pragma endregion
+#pragma region Scale
+	inline const DirectX::XMVECTOR	GetScale()	const;
+	inline const FLOAT				GetScaleX() const;
+	inline const FLOAT				GetScaleY() const;
+	inline const FLOAT				GetScaleZ() const;
+
+	inline const DirectX::XMVECTOR	GetLocalScale()		const;
+	inline const FLOAT				GetLocalScaleX()	const;
+	inline const FLOAT				GetLocalScaleY()	const;
+	inline const FLOAT				GetLocalScaleZ()	const;
+#pragma endregion
+#pragma region Rotation
+	inline const DirectX::XMVECTOR	GetRotation()	const;
+	inline const FLOAT				GetRotationX()	const;
+	inline const FLOAT				GetRotationY()	const;
+	inline const FLOAT				GetRotationZ()	const;
+
+	inline const DirectX::XMVECTOR	GetLocalRotation()	const;
+	inline const FLOAT				GetLocalRotationX() const;
+	inline const FLOAT				GetLocalRotationY() const;
+	inline const FLOAT				GetLocalRotationZ() const;
+#pragma endregion
 	inline const std::shared_ptr<Transform>& GetParent() const;
-	inline const std::shared_ptr<Transform>& GetChild(const size_t _index) const;
+	inline const std::shared_ptr<Transform>& GetChild(const size_t) const;
 	inline const std::vector<std::shared_ptr<Transform>>& GetChildren() const;
+#pragma endregion
+#pragma region Setters
+	inline void SetPosition(const DirectX::XMFLOAT2);
+	inline void SetPosition(const DirectX::XMFLOAT3);
+	inline void SetPosition(const DirectX::XMVECTOR);
 
+	inline void SetLocalPosition(const DirectX::XMFLOAT2);
+	inline void SetLocalPosition(const DirectX::XMFLOAT3);
+	inline void SetLocalPosition(const DirectX::XMVECTOR);
+	
+	inline void SetScale(const DirectX::XMFLOAT2);
+	inline void SetScale(const DirectX::XMFLOAT3);
+	inline void SetScale(const DirectX::XMVECTOR);
+	
+	inline void SetLocalScale(const DirectX::XMFLOAT2);
+	inline void SetLocalScale(const DirectX::XMFLOAT3);
+	inline void SetLocalScale(const DirectX::XMVECTOR);
+
+	inline void SetRotation(const DirectX::XMFLOAT2);
+	inline void SetRotation(const DirectX::XMFLOAT3);
+	inline void SetRotation(const DirectX::XMVECTOR);
+
+	inline void SetLocalRotation(const DirectX::XMFLOAT2);
+	inline void SetLocalRotation(const DirectX::XMFLOAT3);
+	inline void SetLocalRotation(const DirectX::XMVECTOR);
+#pragma endregion
+public:
 };
-
-inline const DirectX::XMFLOAT3 Transform::GetPosition() const {
-	return this->m_position;
-}
-
-inline const DirectX::XMFLOAT3 Transform::GetScale() const {
-	return this->m_scale;
-}
-
-inline const DirectX::XMFLOAT3 Transform::GetRotation() const {
-	return this->m_rotation;
-}
-
-inline void Transform::SetPosition(const DirectX::XMFLOAT3& _position) {
-	this->m_position = _position;
-}
-
-inline void Transform::SetScale(const DirectX::XMFLOAT3& _scale) {
-	this->m_scale = _scale;
-}
-
-inline void Transform::SetRotation(const DirectX::XMFLOAT3& _rotation) {
-	this->m_rotation = _rotation;
-}
-
-inline const DirectX::XMFLOAT3 Transform::GetLocalPosition() const {
-	throw std::runtime_error("");
-}
-
-inline const DirectX::XMFLOAT3 Transform::GetLocalScale() const {
-	throw std::runtime_error("");
-}
-
-inline const DirectX::XMFLOAT3 Transform::GetLocalRotation() const {
-	throw std::runtime_error("");
-}
-
-inline void Transform::SetLocalPosition(const DirectX::XMFLOAT3& _position) {
-	throw std::runtime_error("");
-}
-
-inline void Transform::SetLocalScale(const DirectX::XMFLOAT3& _scale) {
-	throw std::runtime_error("");
-}
-
-inline void Transform::SetLocalRotation(const DirectX::XMFLOAT3& _rotation) {
-	throw std::runtime_error("");
-}
-
-inline const std::shared_ptr<Transform>& Transform::GetParent() const {
-	return this->m_parent;
-}
-
-inline const std::shared_ptr<Transform>& Transform::GetChild(const size_t _index) const {
-	return this->m_children[_index];
-}
-
-inline const std::vector<std::shared_ptr<Transform>>& Transform::GetChildren() const {
-	return this->m_children;
-}
