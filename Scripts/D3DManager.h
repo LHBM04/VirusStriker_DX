@@ -49,8 +49,8 @@ private:
 	bool      m_4xMsaaState = false;    // 4X MSAA enabled
 	UINT      m_4xMsaaQuality = 0;      // quality level of 4X MSAA
 
-	D3D12_VIEWPORT m_screenViewport;
-	D3D12_RECT m_scissorRect;
+	D3D12_VIEWPORT	m_screenViewport;
+	D3D12_RECT		m_scissorRect;
 
 private:
 	FLOAT m_windowPositionX = 100;	// 윈도우 생성 위치(X).

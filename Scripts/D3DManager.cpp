@@ -14,7 +14,7 @@ HRESULT D3DManager::Initialize() {
         D3D_FEATURE_LEVEL_11_0,
         IID_PPV_ARGS(&this->m_pD3DDevice)))) {
         // 디바이스 생성에 실패하면 CPU에서 그래픽 연산이 가능하게끔 한다.
-        Microsoft::WRL::ComPtr<IDXGIAdapter> pWarpAdapter;
+        Microsoft::WRL::ComPtr<IDXGIAdapter> pWarpAdapter{ nullptr };
         if (SUCCEEDED(this->m_pFactory->EnumWarpAdapter(IID_PPV_ARGS(&pWarpAdapter)))) {
             if (FAILED(D3D12CreateDevice(
                 pWarpAdapter.Get(),
@@ -38,11 +38,12 @@ HRESULT D3DManager::Initialize() {
     this->m_dsvDescriptorSize       = this->m_pD3DDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);
     this->m_cbvSrvUavDescriptorSize = this->m_pD3DDevice->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 
-    D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS multisampleQualityLevels{};
-    multisampleQualityLevels.Format              = DXGI_FORMAT_R8G8B8A8_UNORM;
-    multisampleQualityLevels.SampleCount         = 4;
-    multisampleQualityLevels.Flags               = D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE;
-    multisampleQualityLevels.NumQualityLevels    = 0;
+    D3D12_FEATURE_DATA_MULTISAMPLE_QUALITY_LEVELS multisampleQualityLevels{
+        .Format             = DXGI_FORMAT_R8G8B8A8_UNORM,
+        .SampleCount        = 4,
+        .Flags              = D3D12_MULTISAMPLE_QUALITY_LEVELS_FLAG_NONE,
+        .NumQualityLevels   = 0
+    };
 
     if (FAILED(this->m_pD3DDevice->CheckFeatureSupport(
         D3D12_FEATURE_MULTISAMPLE_QUALITY_LEVELS,
@@ -52,7 +53,7 @@ HRESULT D3DManager::Initialize() {
     }
 #pragma endregion
 #pragma region 4. Command Object 생성
-    D3D12_COMMAND_QUEUE_DESC queueDescriptor{};
+    D3D12_COMMAND_QUEUE_DESC queueDescriptor{ };
     queueDescriptor.Flags = D3D12_COMMAND_QUEUE_FLAG_NONE;
     queueDescriptor.Type  = D3D12_COMMAND_LIST_TYPE_DIRECT;
 
@@ -193,7 +194,11 @@ HRESULT D3DManager::Initialize() {
     this->m_screenViewport.MinDepth   = NULL;
     this->m_screenViewport.MaxDepth   = 1.0f;
 
-    this->m_scissorRect = { 0, 0, static_cast<long>(this->m_windowWidth / 2), static_cast<long>(this->m_windowHeight / 2)};
+    this->m_scissorRect = { 
+        0, 
+        0,
+        static_cast<LONG>(this->m_windowWidth / 2.0f), 
+        static_cast<LONG>(this->m_windowHeight / 2.0f)};
 #pragma endregion
     return S_OK;
 }
@@ -207,7 +212,9 @@ VOID D3DManager::Render() {
         assert(0);
     }
 
-    if (FAILED(this->m_pCommandList->Reset(this->m_pCommandAllocator.Get(), nullptr))) {
+    if (FAILED(this->m_pCommandList->Reset(
+        this->m_pCommandAllocator.Get(), 
+        nullptr))) {
         assert(0);
     }
 
@@ -222,11 +229,28 @@ VOID D3DManager::Render() {
     this->m_pCommandList->RSSetViewports(1, &this->m_screenViewport);
     this->m_pCommandList->RSSetScissorRects(1, &this->m_scissorRect);
 
-    // 백 버퍼랑 깊이 버퍼 초기화.
-    this->m_pCommandList->ClearRenderTargetView(this->GetCurrentBackBufferView(), DirectX::Colors::LightSteelBlue, NULL, nullptr);
-    this->m_pCommandList->ClearDepthStencilView(this->GetDepthStencilView(), D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 1.0f, 0, 0, nullptr);
+    // Back Buffer 클리어.
+    this->m_pCommandList->ClearRenderTargetView(
+        this->GetCurrentBackBufferView(), 
+        DirectX::Colors::LightSteelBlue, 
+        NULL, 
+        nullptr);
 
-    this->m_pCommandList->OMSetRenderTargets(1, &this->GetCurrentBackBufferView(), true, &this->GetDepthStencilView());
+    // Depth Buffer 클리어.
+    this->m_pCommandList->ClearDepthStencilView(
+        this->GetDepthStencilView(), 
+        D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 
+        1.0f, 
+        NULL, 
+        NULL,
+        nullptr);
+
+    // Render Target 변경
+    this->m_pCommandList->OMSetRenderTargets(
+        1, 
+        &this->GetCurrentBackBufferView(), 
+        true,
+        &this->GetDepthStencilView());
 
     // 그림 교체
     CD3DX12_RESOURCE_BARRIER nextBarrier = CD3DX12_RESOURCE_BARRIER::Transition(
