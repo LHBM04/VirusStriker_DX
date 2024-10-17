@@ -154,8 +154,8 @@ HRESULT D3DManager::Initialize() {
     depthStencilDescriptor.DepthOrArraySize     = 1;
     depthStencilDescriptor.MipLevels            = 1;
     depthStencilDescriptor.Format               = DXGI_FORMAT_D24_UNORM_S8_UINT;
-    depthStencilDescriptor.SampleDesc.Count     = m_4xMsaaState ? 4 : 1;
-    depthStencilDescriptor.SampleDesc.Quality   = this->m_4xMsaaState ? (this->m_4xMsaaQuality - 1) : 0;
+    depthStencilDescriptor.SampleDesc.Count     = m_isEnable4xMsaaState ? 4 : 1;
+    depthStencilDescriptor.SampleDesc.Quality   = this->m_isEnable4xMsaaState ? (this->m_4xMsaaQuality - 1) : 0;
     depthStencilDescriptor.Flags                = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
     D3D12_CLEAR_VALUE optianalClear{};
@@ -218,25 +218,27 @@ VOID D3DManager::Render() {
         assert(0);
     }
 
-    // 그리기.
-    CD3DX12_RESOURCE_BARRIER currentBarrier = CD3DX12_RESOURCE_BARRIER::Transition(
+    // 리소스 통지
+    CD3DX12_RESOURCE_BARRIER currentResource{ 
+        CD3DX12_RESOURCE_BARRIER::Transition(
         this->GetCurrentBackBuffer(),
         D3D12_RESOURCE_STATE_PRESENT,
-        D3D12_RESOURCE_STATE_RENDER_TARGET);
-    this->m_pCommandList->ResourceBarrier(1, &currentBarrier);
+        D3D12_RESOURCE_STATE_RENDER_TARGET)};
+    this->m_pCommandList->ResourceBarrier(
+        1, 
+        &currentResource);
 
-    // 뷰 포트랑 시저 포트 설정.
+    // View 및 Scissor Rects 설정.
+    // 해당 과정은 Command List가 재설정될 때마다 같이 재설정되어야 함.
     this->m_pCommandList->RSSetViewports(1, &this->m_screenViewport);
     this->m_pCommandList->RSSetScissorRects(1, &this->m_scissorRect);
 
-    // Back Buffer 클리어.
+    // Back Buffer 및 Depth Buffer 클리어.
     this->m_pCommandList->ClearRenderTargetView(
         this->GetCurrentBackBufferView(), 
         DirectX::Colors::LightSteelBlue, 
         NULL, 
         nullptr);
-
-    // Depth Buffer 클리어.
     this->m_pCommandList->ClearDepthStencilView(
         this->GetDepthStencilView(), 
         D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 
@@ -245,28 +247,34 @@ VOID D3DManager::Render() {
         NULL,
         nullptr);
 
-    // Render Target 변경
+    // Render Buffer 타겟팅.
     this->m_pCommandList->OMSetRenderTargets(
         1, 
         &this->GetCurrentBackBufferView(), 
         true,
         &this->GetDepthStencilView());
 
-    // 그림 교체
-    CD3DX12_RESOURCE_BARRIER nextBarrier = CD3DX12_RESOURCE_BARRIER::Transition(
+    // 리소스 통지
+    CD3DX12_RESOURCE_BARRIER nextResource{
+        CD3DX12_RESOURCE_BARRIER::Transition(
         this->GetCurrentBackBuffer(),
         D3D12_RESOURCE_STATE_RENDER_TARGET,
-        D3D12_RESOURCE_STATE_PRESENT);
-    this->m_pCommandList->ResourceBarrier(1, &nextBarrier);
+        D3D12_RESOURCE_STATE_PRESENT)};
+    this->m_pCommandList->ResourceBarrier(
+        1, 
+        &nextResource);
 
+    // Command List 닫기.
     if (FAILED(this->m_pCommandList->Close())) {
         assert(0);
     }
 
-    ID3D12CommandList* commandsLists[]{ this->m_pCommandList.Get() };
-    this->m_pCommandQueue->ExecuteCommandLists(_countof(commandsLists), commandsLists);
+    std::array<ID3D12CommandList*, 1> commandsLists{ this->m_pCommandList.Get() };
+    this->m_pCommandQueue->ExecuteCommandLists(
+        static_cast<UINT>(commandsLists.size()), 
+        commandsLists.data());
 
-    if (FAILED(this->m_pSwapChain->Present(0, 0))) {
+    if (FAILED(this->m_pSwapChain->Present(NULL, NULL))) {
         assert(0);
     }
 
@@ -275,6 +283,7 @@ VOID D3DManager::Render() {
         assert(0);
     }
 
+    // 명령 처리 대기.
     if (this->m_pFence->GetCompletedValue() < this->m_currentFence) {
         HANDLE eventHandle = CreateEventExW(nullptr, nullptr, false, EVENT_ALL_ACCESS);
         if (FAILED(this->m_pFence->SetEventOnCompletion(this->m_currentFence, eventHandle))) {

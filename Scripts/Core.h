@@ -15,8 +15,8 @@ private:
 
 public:
 	static HRESULT	WINAPI		Initialize(const HINSTANCE& _instanceHandle);
-	static int		WINAPI		Run(const INT _commandShow);
-	static void		WINAPI		Quit();
+	static INT		WINAPI		Run(const INT _commandShow);
+	static VOID		WINAPI		Quit();
 	static LRESULT	CALLBACK	ProceedMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 public:

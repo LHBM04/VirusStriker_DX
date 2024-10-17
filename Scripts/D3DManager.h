@@ -38,28 +38,28 @@ private:
 	Microsoft::WRL::ComPtr<ID3D12Fence>                 m_pFence;              // 동기화를 위한 펜스
 	UINT m_currentFence{ 0 };
 
-	UINT m_rtvDescriptorSize = 0;
-	UINT m_dsvDescriptorSize = 0;
-	UINT m_cbvSrvUavDescriptorSize = 0;
+	UINT m_rtvDescriptorSize{ 0 };
+	UINT m_dsvDescriptorSize{ 0 };
+	UINT m_cbvSrvUavDescriptorSize{ 0 };
 
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_pRTVHeap;
 	Microsoft::WRL::ComPtr<ID3D12DescriptorHeap> m_pDSVHeap;
 
 	// Set true to use 4X MSAA (?.1.8).  The default is false.
-	bool      m_4xMsaaState = false;    // 4X MSAA enabled
-	UINT      m_4xMsaaQuality = 0;      // quality level of 4X MSAA
+	bool      m_isEnable4xMsaaState{ false };    // 4X MSAA enabled
+	UINT      m_4xMsaaQuality{ 0 };      // quality level of 4X MSAA
 
 	D3D12_VIEWPORT	m_screenViewport;
 	D3D12_RECT		m_scissorRect;
 
 private:
-	FLOAT m_windowPositionX = 100;	// 윈도우 생성 위치(X).
-	FLOAT m_windowPositionY = 100;	// 윈도우 생성 위치(Y).
+	FLOAT m_windowPositionX{ 100 };	// 윈도우 생성 위치(X).
+	FLOAT m_windowPositionY{ 100 };	// 윈도우 생성 위치(Y).
 	
-	FLOAT m_windowWidth	= 1280;		// 윈도우 가로 너비.
-	FLOAT m_windowHeight	= 720;		// 윈도우 세로 높이.
+	FLOAT m_windowWidth{ 1280 };	// 윈도우 가로 너비.
+	FLOAT m_windowHeight{ 720 };		// 윈도우 세로 높이.
 
-	BOOL m_isFullScreen = false;	// 풀스크린 여부.
+	BOOL m_isFullScreen{ false };	// 풀스크린 여부.
 
 public:
 	HRESULT Initialize();

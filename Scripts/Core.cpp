@@ -63,14 +63,14 @@ int WINAPI Core::Run(const INT _commandShow) {
             DispatchMessage(&message);
         }
         else {
-            static DWORD prevTime = timeGetTime();
+            static DWORD prevTime{ timeGetTime() };
             //if (SceneManager::GetInstance().IsResetDeltaTime())
             //    prevTime = timeGetTime();
 
-            DWORD curTime = timeGetTime();
-            const float deltaTime = (curTime - prevTime) / 1000.0f;
-            static float fixedUpdateTime = 1.0f / 50.0f;
-            static float fixedDeltaTime = 0.0f;
+            DWORD curTime{ timeGetTime() };
+            const float deltaTime{ (curTime - prevTime) / 1000.0f };
+            static float fixedUpdateTime{ 1.0f / 50.0f };
+            static float fixedDeltaTime{ 0.0f };
             fixedDeltaTime += deltaTime;
             if (fixedDeltaTime >= 2.0f) {
                 fixedDeltaTime = 2.0f;
@@ -79,8 +79,10 @@ int WINAPI Core::Run(const INT _commandShow) {
                 fixedDeltaTime -= fixedUpdateTime;
                 D3DManager::GetInstance().FixedUpdate(fixedUpdateTime);
             }
+            
             InputManager::GetInstance().Update();
             D3DManager::GetInstance().Render();
+
             prevTime = curTime;
         }
     }
@@ -103,5 +105,6 @@ LRESULT CALLBACK Core::ProceedMessage(HWND hWnd, UINT message, WPARAM wParam, LP
             InputManager::GetInstance().ProceedInput(message, wParam, lParam);
         } break;
     }
+
     return DefWindowProc(hWnd, message, wParam, lParam);
 }

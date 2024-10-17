@@ -38,9 +38,9 @@ bool InputManager::ProceedInput(const UINT message, const WPARAM wParam, const L
 			this->m_keyboardHandle->ProcessMessage(message, wParam, lParam);
 		} break;
 		default: {
-		} return FALSE;
+		} return false;
 	}
-	return TRUE;
+	return true;
 }
 
 void InputManager::Update() {
