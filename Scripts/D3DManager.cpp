@@ -10,16 +10,14 @@ HRESULT D3DManager::Initialize() {
 
     debugController->EnableDebugLayer();
 #endif
-#pragma region 1. DXGI 팩토리 생성
     // DXGI 팩토리 생성
     if (FAILED(CreateDXGIFactory1(IID_PPV_ARGS(&this->m_pFactory)))) {
         return E_FAIL;
     }
-#pragma endregion
-#pragma region 2. D3D12 디바이스 생성
+
     // D3D12 디바이스 생성
     if (FAILED(D3D12CreateDevice(
-        nullptr, 
+        nullptr,
         D3D_FEATURE_LEVEL_11_0,
         IID_PPV_ARGS(&this->m_pD3DDevice)))) {
         // 디바이스 생성에 실패하면 CPU에서 그래픽 연산이 가능하게끔 한다.
@@ -35,19 +33,26 @@ HRESULT D3DManager::Initialize() {
 
         return E_FAIL;
     }
-#pragma endregion
-#pragma region 3. Fence 생성
-    this->CreateFence();
-#pragma endregion
-#pragma region 4. Command Object 생성
-    this->CreateCommandObjects();
-#pragma endregion
-#pragma region 5. Swap Chain 생성
-    this->CreateSwapChain();
-#pragma endregion
-#pragma region 6. Descriptor Heap 생성
-    this->CreateDescriptorHeaps();
-#pragma endregion
+
+    // Fence 생성.
+    if (FAILED(this->CreateFence())) {
+        return E_FAIL;
+    }
+
+    // Command Object들 생성.
+    if (FAILED(this->CreateCommandObjects())) {
+        return E_FAIL;
+    }
+
+    // Swap Chain 생성.
+    if (FAILED(this->CreateSwapChain())) {
+        return E_FAIL;
+    }
+
+    if (FAILED(this->CreateDescriptorHeaps())) {
+        return E_FAIL;
+    }
+
     return S_OK;
 }
 
@@ -188,14 +193,14 @@ VOID D3DManager::Render() {
     }
 
     // 리소스 통지
-    CD3DX12_RESOURCE_BARRIER currentResource{ 
-        CD3DX12_RESOURCE_BARRIER::Transition(
+    const auto r = CD3DX12_RESOURCE_BARRIER::Transition(
         this->GetCurrentBackBuffer(),
         D3D12_RESOURCE_STATE_PRESENT,
-        D3D12_RESOURCE_STATE_RENDER_TARGET)};
+        D3D12_RESOURCE_STATE_RENDER_TARGET);
+
     this->m_pCommandList->ResourceBarrier(
         1, 
-        &currentResource);
+        &r);
 
     // View 및 Scissor Rects 설정.
     // 해당 과정은 Command List가 재설정될 때마다 같이 재설정되어야 함.
@@ -217,11 +222,13 @@ VOID D3DManager::Render() {
         nullptr);
 
     // Render Buffer 타겟팅.
+    const auto a1 = this->GetCurrentBackBufferView();
+    const auto a2 = this->GetDepthStencilView();
     this->m_pCommandList->OMSetRenderTargets(
         1, 
-        &this->GetCurrentBackBufferView(), 
+        &a1, 
         true,
-        &this->GetDepthStencilView());
+        &a2);
 
     // 리소스 통지
     CD3DX12_RESOURCE_BARRIER nextResource{
