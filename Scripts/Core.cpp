@@ -46,6 +46,10 @@ HRESULT WINAPI Core::Initialize(const HINSTANCE& _instanceHandle) {
         return E_FAIL;
     }
 
+    if (FAILED(D3DManager::GetInstance().Resize())) {
+        return E_FAIL;
+    }
+
     InputManager::GetInstance().Initialize();
     return S_OK;
 }
@@ -87,7 +91,6 @@ int WINAPI Core::Run(const INT _commandShow) {
         }
     }
 
-    D3DManager::GetInstance().Release();
     UnregisterClass(Core::m_windowClassName, Core::m_windowClass.hInstance);
     return 0;
 }
