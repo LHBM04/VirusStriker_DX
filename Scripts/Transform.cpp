@@ -5,7 +5,6 @@ m_position(0.0f, 0.0f, 0.0f),
 m_scale(1.0f, 1.0f, 1.0f),
 m_rotation(0.0f, 0.0f, 0.0f),
 m_parent(nullptr) {
-
 }
 
 Transform::Transform(
@@ -50,41 +49,6 @@ void Transform::OnStart() {
 
 void Transform::OnDestroy() {
     return;
-}
-
-const DirectX::XMVECTOR Transform::WorldToLocalPosition(const Transform&)
-{
-    return DirectX::XMVECTOR();
-}
-
-const DirectX::XMVECTOR Transform::LocalToWorldScale(const Transform&)
-{
-    return DirectX::XMVECTOR();
-}
-
-const DirectX::XMVECTOR Transform::WorldToLocalScale(const Transform&)
-{
-    return DirectX::XMVECTOR();
-}
-
-const DirectX::XMVECTOR Transform::LocalToWorldPosition(const Transform&)
-{
-    return DirectX::XMVECTOR();
-}
-
-const DirectX::XMVECTOR Transform::WorldToLocalPosition(const Transform&)
-{
-    return DirectX::XMVECTOR();
-}
-
-const DirectX::XMVECTOR Transform::WorldToLocalRotation(const Transform&)
-{
-    return DirectX::XMVECTOR();
-}
-
-const DirectX::XMVECTOR Transform::LocalToWorldRotation(const Transform&)
-{
-    return DirectX::XMVECTOR();
 }
 
 inline const DirectX::XMVECTOR Transform::GetPosition() const

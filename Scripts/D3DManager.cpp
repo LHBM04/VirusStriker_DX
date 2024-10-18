@@ -1,6 +1,15 @@
 #include "D3DManager.h"
 
 HRESULT D3DManager::Initialize() {
+#if defined(DEBUG) || defined(_DEBUG) 
+    // D3D12 叼滚弊摸 劝己拳
+    Microsoft::WRL::ComPtr<ID3D12Debug> debugController;
+    if (FAILED(D3D12GetDebugInterface(IID_PPV_ARGS(&debugController)))) {
+        return E_FAIL;
+    }
+
+    debugController->EnableDebugLayer();
+#endif
 #pragma region 1. DXGI 蒲配府 积己
     // DXGI 蒲配府 积己
     if (FAILED(CreateDXGIFactory1(IID_PPV_ARGS(&this->m_pFactory)))) {
@@ -77,6 +86,11 @@ HRESULT D3DManager::Initialize() {
         nullptr,
         IID_PPV_ARGS(&this->m_pCommandList)))) {
         return E_FAIL;
+    }
+
+    // Command List 摧扁.
+    if (FAILED(this->m_pCommandList->Close())) {
+        assert(0);
     }
 #pragma endregion
 #pragma region 5. Swap Chain 积己
@@ -242,8 +256,8 @@ VOID D3DManager::Render() {
     this->m_pCommandList->ClearDepthStencilView(
         this->GetDepthStencilView(), 
         D3D12_CLEAR_FLAG_DEPTH | D3D12_CLEAR_FLAG_STENCIL, 
-        1.0f, 
-        NULL, 
+        1.0f,
+        NULL,
         NULL,
         nullptr);
 

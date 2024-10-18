@@ -25,8 +25,8 @@ private:
 	Microsoft::WRL::ComPtr<IDXGIFactory4>				m_pFactory;
 	Microsoft::WRL::ComPtr<ID3D12Device>				m_pD3DDevice;
 
-	static const UINT MAX_BACKBUFFER_COUNT{ 2 };	// 이중 버퍼링.
-	UINT m_currentBackBuffer	{ 0 };	// 현재 백버퍼 인덱스.
+	static const UINT MAX_BACKBUFFER_COUNT	{ 2 };	// 이중 버퍼링.
+	UINT m_currentBackBuffer				{ 0 };	// 현재 백버퍼 인덱스.
 	Microsoft::WRL::ComPtr<IDXGISwapChain3>										m_pSwapChain;
 	std::array<Microsoft::WRL::ComPtr<ID3D12Resource2>, MAX_BACKBUFFER_COUNT>	m_pSwapChainBuffer;
 	Microsoft::WRL::ComPtr<ID3D12Resource2>										m_pDepthStencilBuffer;
